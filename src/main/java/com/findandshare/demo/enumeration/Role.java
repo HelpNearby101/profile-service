@@ -1,4 +1,7 @@
 package com.findandshare.demo.enumeration;
 
-public class Role {
+public enum Role {
+    USER,
+    MODERATOR,
+    ADMIN
 }

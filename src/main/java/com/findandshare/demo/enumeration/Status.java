@@ -1,4 +1,6 @@
 package com.findandshare.demo.enumeration;
 
-public class Status {
+public enum Status {
+    ACTIVE,
+    INACTIVE
 }

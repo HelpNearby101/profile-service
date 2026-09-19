@@ -1,6 +1,8 @@
 package com.findandshare.demo.controller;
 
 import com.findandshare.demo.entity.Profile;
+import com.findandshare.demo.enumeration.ResponseStatus;
+import com.findandshare.demo.response.ApiResponse;
 import com.findandshare.demo.service.ProfileService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,55 +22,87 @@ public class ProfileController {
 
     // Create a new profile
     @PostMapping
-    public ResponseEntity<Profile> createProfile(
+    public ResponseEntity<ApiResponse> createProfile(
             @RequestBody Profile profile) {
 
         Profile createdProfile = profileService.createProfile(profile);
 
-        return new ResponseEntity<>(
+        ApiResponse response = new ApiResponse(
+                "Profile created successfully",
+                ResponseStatus.SUCCESS,
                 createdProfile,
-                HttpStatus.CREATED
+                HttpStatus.CREATED.value()
         );
+
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     // Get profile by ID
     @GetMapping("/{id}")
-    public ResponseEntity<Profile> getProfileById(
+    public ResponseEntity<ApiResponse> getProfileById(
             @PathVariable String id) {
 
         Profile profile = profileService.getProfileById(id);
 
-        return ResponseEntity.ok(profile);
+        ApiResponse response = new ApiResponse(
+                "Profile fetched successfully",
+                ResponseStatus.SUCCESS,
+                profile,
+                HttpStatus.OK.value()
+        );
+
+        return ResponseEntity.ok(response);
     }
 
     // Get all profiles
     @GetMapping
-    public ResponseEntity<List<Profile>> getAllProfiles() {
+    public ResponseEntity<ApiResponse> getAllProfiles() {
 
         List<Profile> profiles = profileService.getAllProfiles();
 
-        return ResponseEntity.ok(profiles);
+        ApiResponse response = new ApiResponse(
+                "Profiles fetched successfully",
+                ResponseStatus.SUCCESS,
+                profiles,
+                HttpStatus.OK.value()
+        );
+
+        return ResponseEntity.ok(response);
     }
 
     // Update profile
     @PutMapping("/{id}")
-    public ResponseEntity<Profile> updateProfile(
+    public ResponseEntity<ApiResponse> updateProfile(
             @PathVariable String id,
             @RequestBody Profile profile) {
 
         Profile updatedProfile =
                 profileService.updateProfile(id, profile);
 
-        return ResponseEntity.ok(updatedProfile);
+        ApiResponse response = new ApiResponse(
+                "Profile updated successfully",
+                ResponseStatus.SUCCESS,
+                updatedProfile,
+                HttpStatus.OK.value()
+        );
+
+        return ResponseEntity.ok(response);
     }
 
     // Delete profile
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProfile(
+    public ResponseEntity<ApiResponse> deleteProfile(
             @PathVariable String id) {
 
         profileService.deleteProfile(id);
 
-        return ResponseEntity.noContent().build();
+        ApiResponse response = new ApiResponse(
+                "Profile deleted successfully",
+                ResponseStatus.SUCCESS,
+                null,
+                HttpStatus.NO_CONTENT.value()
+        );
+
+        return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);
     }
 }

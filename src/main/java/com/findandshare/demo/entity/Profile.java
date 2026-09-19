@@ -25,10 +25,8 @@ public class Profile {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-
     public Profile() {
     }
-
 
     public Profile(String name, String email, String phone, String bio,
                    String profileImage, Role role, Status status,
@@ -45,18 +43,15 @@ public class Profile {
         this.longitude = longitude;
     }
 
-
     public void onCreate() {
         LocalDateTime now = LocalDateTime.now();
         this.createdAt = now;
         this.updatedAt = now;
     }
 
-
     public void onUpdate() {
         this.updatedAt = LocalDateTime.now();
     }
-
 
     public String getId() {
         return id;
@@ -66,7 +61,6 @@ public class Profile {
         this.id = id;
     }
 
-
     public String getName() {
         return name;
     }
@@ -74,7 +68,6 @@ public class Profile {
     public void setName(String name) {
         this.name = name;
     }
-
 
     public String getEmail() {
         return email;
@@ -84,7 +77,6 @@ public class Profile {
         this.email = email;
     }
 
-
     public String getPhone() {
         return phone;
     }
@@ -92,7 +84,6 @@ public class Profile {
     public void setPhone(String phone) {
         this.phone = phone;
     }
-
 
     public String getBio() {
         return bio;
@@ -102,7 +93,6 @@ public class Profile {
         this.bio = bio;
     }
 
-
     public String getProfileImage() {
         return profileImage;
     }
@@ -110,7 +100,6 @@ public class Profile {
     public void setProfileImage(String profileImage) {
         this.profileImage = profileImage;
     }
-
 
     public Role getRole() {
         return role;
@@ -120,7 +109,6 @@ public class Profile {
         this.role = role;
     }
 
-
     public Status getStatus() {
         return status;
     }
@@ -128,7 +116,6 @@ public class Profile {
     public void setStatus(Status status) {
         this.status = status;
     }
-
 
     public Double getLatitude() {
         return latitude;
@@ -138,7 +125,6 @@ public class Profile {
         this.latitude = latitude;
     }
 
-
     public Double getLongitude() {
         return longitude;
     }
@@ -147,7 +133,6 @@ public class Profile {
         this.longitude = longitude;
     }
 
-
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -155,7 +140,6 @@ public class Profile {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
-
 
     public LocalDateTime getUpdatedAt() {
         return updatedAt;

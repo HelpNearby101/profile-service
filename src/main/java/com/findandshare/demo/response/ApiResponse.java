@@ -1,5 +1,6 @@
 package com.findandshare.demo.response;
 
+import com.findandshare.demo.entity.Profile;
 import com.findandshare.demo.enumeration.ResponseStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,6 +15,9 @@ public class ApiResponse {
     private ResponseStatus status;
     private Object data;
     private int statusCode;
+
+    public ApiResponse(String profileCreatedSuccessfully, ResponseStatus responseStatus, Profile createdProfile, int value) {
+    }
 
     public String getMessage() {
         return message;

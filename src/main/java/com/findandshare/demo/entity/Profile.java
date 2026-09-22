@@ -3,7 +3,10 @@ package com.findandshare.demo.entity;
 import com.findandshare.demo.enumeration.Role;
 import com.findandshare.demo.enumeration.Status;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.GeoSpatialIndexType;
+import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 
 import java.time.LocalDateTime;
 
@@ -20,8 +23,10 @@ public class Profile {
     private String profileImage;
     private Role role;
     private Status status;
-    private Double latitude;
-    private Double longitude;
+
+    @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
+    private GeoJsonPoint location;
+
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -30,7 +35,7 @@ public class Profile {
 
     public Profile(String name, String email, String phone, String bio,
                    String profileImage, Role role, Status status,
-                   Double latitude, Double longitude) {
+                   GeoJsonPoint location) {
 
         this.name = name;
         this.email = email;
@@ -39,8 +44,7 @@ public class Profile {
         this.profileImage = profileImage;
         this.role = role;
         this.status = status;
-        this.latitude = latitude;
-        this.longitude = longitude;
+        this.location = location;
     }
 
     public void onCreate() {
@@ -76,6 +80,8 @@ public class Profile {
     public void setEmail(String email) {
         this.email = email;
     }
+
+
 
     public String getPhone() {
         return phone;
@@ -117,20 +123,12 @@ public class Profile {
         this.status = status;
     }
 
-    public Double getLatitude() {
-        return latitude;
+    public GeoJsonPoint getLocation() {
+        return location;
     }
 
-    public void setLatitude(Double latitude) {
-        this.latitude = latitude;
-    }
-
-    public Double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
+    public void setLocation(GeoJsonPoint location) {
+        this.location = location;
     }
 
     public LocalDateTime getCreatedAt() {

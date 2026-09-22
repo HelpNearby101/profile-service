@@ -37,6 +37,30 @@ public class ProfileController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
+    // Find nearby profiles
+    @GetMapping("/nearby")
+    public ResponseEntity<ApiResponse> findNearbyProfiles(
+            @RequestParam double latitude,
+            @RequestParam double longitude,
+            @RequestParam(defaultValue = "5") double radius) {
+
+        List<Profile> profiles =
+                profileService.findNearbyProfiles(
+                        latitude,
+                        longitude,
+                        radius
+                );
+
+        ApiResponse response = new ApiResponse(
+                "Nearby profiles fetched successfully",
+                ResponseStatus.SUCCESS,
+                profiles,
+                HttpStatus.OK.value()
+        );
+
+        return ResponseEntity.ok(response);
+    }
+
     // Get profile by ID
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse> getProfileById(
@@ -96,12 +120,9 @@ public class ProfileController {
 
         profileService.deleteProfile(id);
 
-        ApiResponse response = new ApiResponse(
-                "Profile deleted successfully",
+        ApiResponse response = new ApiResponse("Profile deleted successfully",
                 ResponseStatus.SUCCESS,
-                null,
-                HttpStatus.NO_CONTENT.value()
-        );
+                null,HttpStatus.NO_CONTENT.value());
 
         return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);
     }

@@ -15,4 +15,10 @@ public interface ProfileService {
     Profile updateProfile(String id, Profile profile);
 
     void deleteProfile(String id);
+
+    List<Profile> findNearbyProfiles(
+            double latitude,
+            double longitude,
+            double radius
+    );
 }

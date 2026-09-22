@@ -4,6 +4,9 @@ import com.findandshare.demo.entity.Profile;
 import com.findandshare.demo.exception.ProfileNotFoundException;
 import com.findandshare.demo.repository.ProfileRepository;
 import com.findandshare.demo.service.ProfileService;
+import org.springframework.data.geo.Distance;
+import org.springframework.data.geo.Metrics;
+import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -56,15 +59,15 @@ public class ProfileServiceImpl implements ProfileService {
                         )
                 );
 
+        // Fields allowed to be updated
         existingProfile.setName(profile.getName());
         existingProfile.setEmail(profile.getEmail());
         existingProfile.setPhone(profile.getPhone());
         existingProfile.setBio(profile.getBio());
         existingProfile.setProfileImage(profile.getProfileImage());
-        existingProfile.setRole(profile.getRole());
-        existingProfile.setStatus(profile.getStatus());
-        existingProfile.setLatitude(profile.getLatitude());
-        existingProfile.setLongitude(profile.getLongitude());
+        existingProfile.setLocation(profile.getLocation());
+
+        // id, role, status and createdAt are not changed
 
         existingProfile.setUpdatedAt(LocalDateTime.now());
 
@@ -82,5 +85,23 @@ public class ProfileServiceImpl implements ProfileService {
                 );
 
         profileRepository.delete(existingProfile);
+    }
+
+    @Override
+    public List<Profile> findNearbyProfiles(
+            double latitude,
+            double longitude,
+            double radius) {
+
+        GeoJsonPoint location =
+                new GeoJsonPoint(longitude, latitude);
+
+        Distance distance =
+                new Distance(radius, Metrics.KILOMETERS);
+
+        return profileRepository.findByLocationNear(
+                location,
+                distance
+        );
     }
 }

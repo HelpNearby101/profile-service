@@ -13,4 +13,6 @@ public interface ProfileRepository extends MongoRepository<Profile, String> {
             GeoJsonPoint location,
             Distance distance
     );
+
+    List<Profile> findByNameContainingIgnoreCase(String name);
 }

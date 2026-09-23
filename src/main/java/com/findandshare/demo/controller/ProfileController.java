@@ -37,6 +37,24 @@ public class ProfileController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
+    // Search profiles by name
+    @GetMapping("/search")
+    public ResponseEntity<ApiResponse> searchProfilesByName(
+            @RequestParam String name) {
+
+        List<Profile> profiles =
+                profileService.searchProfilesByName(name);
+
+        ApiResponse response = new ApiResponse(
+                "Profiles searched successfully",
+                ResponseStatus.SUCCESS,
+                profiles,
+                HttpStatus.OK.value()
+        );
+
+        return ResponseEntity.ok(response);
+    }
+
     // Find nearby profiles
     @GetMapping("/nearby")
     public ResponseEntity<ApiResponse> findNearbyProfiles(
@@ -120,9 +138,12 @@ public class ProfileController {
 
         profileService.deleteProfile(id);
 
-        ApiResponse response = new ApiResponse("Profile deleted successfully",
+        ApiResponse response = new ApiResponse(
+                "Profile deleted successfully",
                 ResponseStatus.SUCCESS,
-                null,HttpStatus.NO_CONTENT.value());
+                null,
+                HttpStatus.NO_CONTENT.value()
+        );
 
         return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);
     }

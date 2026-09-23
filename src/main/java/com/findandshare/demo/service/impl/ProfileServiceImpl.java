@@ -48,7 +48,10 @@ public class ProfileServiceImpl implements ProfileService {
 
         return profileRepository.findAll();
     }
-
+    @Override
+    public List<Profile> searchProfilesByName(String name) {
+        return profileRepository.findByNameContainingIgnoreCase(name);
+    }
     @Override
     public Profile updateProfile(String id, Profile profile) {
 
@@ -59,7 +62,6 @@ public class ProfileServiceImpl implements ProfileService {
                         )
                 );
 
-        // Fields allowed to be updated
         existingProfile.setName(profile.getName());
         existingProfile.setEmail(profile.getEmail());
         existingProfile.setPhone(profile.getPhone());
@@ -67,7 +69,11 @@ public class ProfileServiceImpl implements ProfileService {
         existingProfile.setProfileImage(profile.getProfileImage());
         existingProfile.setLocation(profile.getLocation());
 
-        // id, role, status and createdAt are not changed
+        // Do NOT change these
+        // existingProfile.setId(...)
+        // existingProfile.setRole(...)
+        // existingProfile.setStatus(...)
+        // existingProfile.setCreatedAt(...)
 
         existingProfile.setUpdatedAt(LocalDateTime.now());
 

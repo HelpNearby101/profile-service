@@ -21,4 +21,6 @@ public interface ProfileService {
             double longitude,
             double radius
     );
+
+    List<Profile> searchProfilesByName(String name);
 }
